@@ -1,4 +1,5 @@
 export default function CommuteInfo({ commute }) {
+  if (!commute) return null;
   return (
     <div className="bg-gradient-to-br from-green-100 to-green-200 shadow-lg rounded-2xl p-6 border border-green-200 hover:shadow-2xl transition-all">
       <h2 className="text-xl font-bold mb-2 text-green-600">Commute</h2>
@@ -7,3 +8,4 @@ export default function CommuteInfo({ commute }) {
     </div>
   );
 }
+
