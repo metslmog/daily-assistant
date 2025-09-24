@@ -39,13 +39,17 @@ export default function Dashboard() {
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-400 via-fuchsia-200 to-pink-200 py-8">
-            <div className="p-8 font-sans w-full max-w-3xl mx-auto rounded-3xl">
+            <div className="p-8 font-sans w-full h-full mx-auto rounded-3xl">
                 <h1 className="text-4xl font-extrabold mb-8 w-full block text-white drop-shadow-lg">Good Morning!</h1>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <WeatherCard weather={data.weather} />
-                    <OutfitSuggestion outfit={data.outfit} />
-                    <CommuteInfo commute={data.transport} />
-                    <CalendarEvents events={data.calendar} />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                    <div className="flex flex-col gap-8">
+                        <WeatherCard weather={data.weather} />
+                        <CommuteInfo commute={data.transport} />
+                    </div>
+                    <div className="flex flex-col gap-8">
+                        <OutfitSuggestion outfit={data.outfit} />
+                        <CalendarEvents events={data.calendar} />
+                    </div>
                 </div>
             </div>
         </div>
