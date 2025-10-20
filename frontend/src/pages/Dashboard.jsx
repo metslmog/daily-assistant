@@ -9,9 +9,17 @@ import { fetchRecommendations } from "../services/api";
 
 
 export default function Dashboard() {
+    const [home, setHome] = useState(null);
+    const [work, setWork] = useState(null);
     const [data, setData] = useState(null);
     useEffect(() => {
-        fetchRecommendations().then(setData);
+        const storedHome = localStorage.getItem("home");
+        const storedWork = localStorage.getItem("work");
+        if (storedHome) setHome(storedHome);
+        if (storedWork) setWork(storedWork);
+        fetchRecommendations(storedHome, storedWork)
+            .then(setData)
+            .catch(console.error);
     }, []);
 
     // Placeholder sample data
@@ -38,7 +46,7 @@ export default function Dashboard() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-400 via-fuchsia-200 to-pink-200 py-8">
+        <div className="min-h-screen bg-gradient-to-br from-blue-300 via-fuchsia-200 to-pink-100 py-8">
             <div className="p-8 font-sans w-full h-full mx-auto rounded-3xl">
                 <h1 className="text-4xl font-extrabold mb-8 w-full block text-white drop-shadow-lg">Good Morning!</h1>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">

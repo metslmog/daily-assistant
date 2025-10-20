@@ -1,3 +1,6 @@
+// Sort transit options by duration (ascending)
+import Card from "./Card";
+
 export default function CommuteInfo({ commute }) {
   if (!commute) return null;
 
@@ -5,23 +8,23 @@ export default function CommuteInfo({ commute }) {
   const sortedTransit =
     commute.transit && Array.isArray(commute.transit)
       ? [...commute.transit].sort((a, b) => {
-          // Try to parse durations as minutes, fallback to string compare
-          const parseDuration = (str) => {
-            // e.g., "15 mins", "1 hr 5 mins"
-            if (!str) return Infinity;
-            const hrMatch = str.match(/(\d+)\s*hr/);
-            const minMatch = str.match(/(\d+)\s*min/);
-            let mins = 0;
-            if (hrMatch) mins += parseInt(hrMatch[1], 10) * 60;
-            if (minMatch) mins += parseInt(minMatch[1], 10);
-            return mins;
-          };
-          return parseDuration(a.duration) - parseDuration(b.duration);
-        })
+        // Try to parse durations as minutes, fallback to string compare
+        const parseDuration = (str) => {
+          // e.g., "15 mins", "1 hr 5 mins"
+          if (!str) return Infinity;
+          const hrMatch = str.match(/(\d+)\s*hr/);
+          const minMatch = str.match(/(\d+)\s*min/);
+          let mins = 0;
+          if (hrMatch) mins += parseInt(hrMatch[1], 10) * 60;
+          if (minMatch) mins += parseInt(minMatch[1], 10);
+          return mins;
+        };
+        return parseDuration(a.duration) - parseDuration(b.duration);
+      })
       : [];
 
   return (
-    <div className="bg-gradient-to-br from-green-100 to-green-200 shadow-lg rounded-2xl p-6 border border-green-200 hover:shadow-2xl transition-all">
+    <Card>
       <h2 className="text-xl font-bold mb-4 text-green-600">Commute</h2>
       {commute.driving && (
         <p className="text-green-700 text-lg font-medium">
@@ -59,7 +62,7 @@ export default function CommuteInfo({ commute }) {
           )}
         </p>
       )}
-    </div>
+    </Card>
   );
 }
 

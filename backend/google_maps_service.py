@@ -66,13 +66,11 @@ def get_travel_summary(api_key, origin, destination, departure_time=None):
 
     return summary
 
-def get_google_directions():
+def get_google_directions(home, work):
     load_dotenv()
     MY_API_KEY = os.getenv('GOOGLE_MAPS_API_KEY')
     if not MY_API_KEY:
         raise ValueError("GOOGLE_MAPS_API_KEY not set in .env file")
-    START_DEST = '601 Van Ness Ave, San Francisco, CA'
-    END_DEST = '160 Spear St, San Francisco, CA'
 
-    travel_summary = get_travel_summary(MY_API_KEY, START_DEST, END_DEST)
+    travel_summary = get_travel_summary(MY_API_KEY, home, work)
     return travel_summary
