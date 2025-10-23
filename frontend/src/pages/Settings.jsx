@@ -20,7 +20,7 @@ export default function Settings() {
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-white shadow-lg rounded-2xl">
+    <div className="max-w-md mx-auto p-6 bg-white rounded-2xl">
       <h1 className="text-2xl font-bold mb-4">Settings</h1>
 
       <label className="block mb-2 font-medium">Home Address</label>
