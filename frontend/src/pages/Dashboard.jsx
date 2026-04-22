@@ -18,17 +18,32 @@ export default function Dashboard() {
     const [home, setHome] = useState(null);
     const [work, setWork] = useState(null);
     const [data, setData] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [loadingStatus, setLoadingStatus] = useState("Connecting to backend...");
     const location = useLocation();
     const navigate = useNavigate();
     const showSettings = location.pathname === "/settings";
+    
     useEffect(() => {
         const storedHome = localStorage.getItem("home");
         const storedWork = localStorage.getItem("work");
         if (storedHome) setHome(storedHome);
         if (storedWork) setWork(storedWork);
+        
+        setLoadingStatus("Fetching your daily recommendations...");
+        
         fetchRecommendations(storedHome, storedWork)
-            .then(setData)
-            .catch(console.error);
+            .then((result) => {
+                setData(result);
+                setLoading(false);
+                setLoadingStatus("Complete!");
+            })
+            .catch((err) => {
+                console.error("API Error:", err);
+                setError(`Failed to load recommendations: ${err.message}`);
+                setLoading(false);
+            });
     }, []);
 
     // Placeholder sample data
@@ -40,10 +55,46 @@ export default function Dashboard() {
     //    { time: "1:00 PM", title: "Project review" },
     //];
 
+    if (loading) {
+        return (
+            <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-400 via-fuchsia-200 to-pink-200">
+                <div className="bg-white/80 backdrop-blur-sm rounded-lg p-8 shadow-lg">
+                    <div className="flex items-center space-x-3">
+                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600"></div>
+                        <span className="text-xl text-gray-700">{loadingStatus}</span>
+                    </div>
+                    <div className="mt-4 text-sm text-gray-500">
+                        This may take a moment while we gather your data...
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-red-400 via-pink-200 to-orange-200">
+                <div className="bg-white/90 backdrop-blur-sm rounded-lg p-8 shadow-lg max-w-md">
+                    <div className="text-center">
+                        <div className="text-6xl mb-4">⚠️</div>
+                        <h2 className="text-xl font-bold text-gray-800 mb-2">Oops! Something went wrong</h2>
+                        <p className="text-gray-600 mb-4">{error}</p>
+                        <button 
+                            onClick={() => window.location.reload()} 
+                            className="bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 transition-colors"
+                        >
+                            Try Again
+                        </button>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     if (!data) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-400 via-fuchsia-200 to-pink-200">
-                <span className="text-xl text-gray-700">Loading...</span>
+                <span className="text-xl text-gray-700">No data received</span>
             </div>
         );
     }
