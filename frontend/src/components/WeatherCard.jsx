@@ -7,7 +7,7 @@ export default function WeatherCard({ weather }) {
       headerColor="bg-blue-500" 
       contentColor="bg-blue-50"
     >
-      <p className="text-black text-base font-medium">{weather.temp}°F — {weather.conditions}</p>
+      <p className="text-black text-sm font-medium">{weather.temp}°F — {weather.conditions}</p>
     </Card>
   );
 }

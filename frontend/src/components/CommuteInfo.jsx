@@ -3,9 +3,6 @@ import Card from "./Card";
 
 export default function CommuteInfo({ commute }) {
   if (!commute) return null;
-  
-  // Debug logging
-  console.log("CommuteInfo received:", commute);
 
   // Sort transit options by duration (ascending)
   const sortedTransit =
@@ -33,26 +30,26 @@ export default function CommuteInfo({ commute }) {
       contentColor="bg-green-50"
     >
       {commute.driving && !commute.driving.error && (
-        <p className="text-black text-base font-medium mb-2">
+        <p className="text-black text-sm font-medium mb-2">
           <span className="font-semibold">🚗 Driving:</span> {commute.driving.duration}
-          {commute.driving.distance && <span className="text-gray-700 text-sm"> ({commute.driving.distance})</span>}
+          {commute.driving.distance && <span className="text-gray-700 text-xs"> ({commute.driving.distance})</span>}
         </p>
       )}
       
       {commute.driving && commute.driving.error && (
-        <p className="text-black text-base font-medium mb-2">
+        <p className="text-black text-sm font-medium mb-2">
           <span className="font-semibold">🚗 Driving:</span> <span className="text-gray-600">Route unavailable</span>
         </p>
       )}
       {commute.walking && (
-        <p className="text-black text-base font-medium mb-2">
+        <p className="text-black text-sm font-medium mb-2">
           <span className="font-semibold">🚶 Walking:</span> {commute.walking.duration}
-          {commute.walking.distance && <span className="text-gray-700 text-sm"> ({commute.walking.distance})</span>}
+          {commute.walking.distance && <span className="text-gray-700 text-xs"> ({commute.walking.distance})</span>}
         </p>
       )}
       {commute.transit && (
         <div>
-          <p className="text-black text-base font-medium mb-2">🚌 Public Transit:</p>
+          <p className="text-black text-sm font-medium mb-2">🚌 Public Transit:</p>
           {Array.isArray(commute.transit) && commute.transit.length > 0 ? (
             <ul className="ml-3 mt-1 space-y-1.5">
               {sortedTransit.map((option, idx) => (

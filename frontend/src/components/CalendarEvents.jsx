@@ -9,7 +9,7 @@ export default function CalendarEvents({ events }) {
     >
       <ul className="space-y-1.5">
         {events.map((event, idx) => (
-          <li key={idx} className="text-black text-base font-medium">
+          <li key={idx} className="text-black text-sm font-medium">
             📅 {event.time} — {event.title}
           </li>
         ))}
